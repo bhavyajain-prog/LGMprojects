@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+    <script>
+        function convertCurrency() {
+            var fromCurrency = document.getElementById("fromCurrency").value;
+            var toCurrency = document.getElementById("toCurrency").value;
+            var amount = document.getElementById("amount").value;
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "CurrencyConverterServlet?from=" + fromCurrency + "&to=" + toCurrency + "&amount=" + amount, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById("result").innerText = "Converted Amount: " + xhr.responseText;
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    <h1>Currency Converter</h1>
+    <form onsubmit="convertCurrency(); return false;">
+        <label for="fromCurrency">From Currency:</label>
+        <input type="text" id="fromCurrency" name="fromCurrency" placeholder="USD" required>
+        <label for="toCurrency">To Currency:</label>
+        <input type="text" id="toCurrency" name="toCurrency" placeholder="INR" required>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" placeholder="74.50" required>
+        <button type="submit">Convert</button>
+    </form>
+    <p id="result"></p>
+</body>
+</html>
